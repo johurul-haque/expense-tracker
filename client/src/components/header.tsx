@@ -1,11 +1,23 @@
 import { Link } from '@tanstack/react-router';
 
+const LINKS = [
+  ['/', 'Home'],
+  ['/expenses', 'Expenses'],
+  ['/create-expenses', 'Create Expenses'],
+];
+
 export function Header() {
   return (
     <header className="flex p-2 gap-2">
-      <Link to="/" className="[&.active]:underline underline-offset-2">
-        Home
-      </Link>
+      {LINKS.map(([path, label]) => (
+        <Link
+          key={path}
+          to={path}
+          className="[&.active]:underline underline-offset-2"
+        >
+          {label}
+        </Link>
+      ))}
     </header>
   );
 }
