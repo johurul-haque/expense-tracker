@@ -20,7 +20,7 @@ function App() {
   if (error) return 'An error has occurred: ' + error.message;
 
   return (
-    <Card className="w-[350px] mx-auto">
+    <Card className="w-[350px] mx-auto my-10">
       <CardHeader>
         <CardTitle>Total Spent</CardTitle>
         <CardDescription>The total amount you've spent.</CardDescription>
