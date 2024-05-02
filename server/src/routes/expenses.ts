@@ -21,6 +21,11 @@ router.post('/', zValidator('json', createExpensesSchema), async (c) => {
   return c.json({ expenses });
 });
 
+router.get('/total-spent', (c) => {
+  const total = fakeExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+  return c.json({ total });
+});
+
 router.get('/:id{[0-9]+}', (c) => {
   const id = Number(c.req.param('id'));
   const expenses = fakeExpenses.find((exp) => exp.id === id);
