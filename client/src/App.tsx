@@ -8,7 +8,7 @@ import {
 import { useState } from 'react';
 
 function App() {
-  const [totalSpent, setTotalSpent] = useState(0);
+  const [totalSpent] = useState(0);
 
   return (
     <Card className="w-[350px] mx-auto">
