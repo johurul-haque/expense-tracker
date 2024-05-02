@@ -6,7 +6,10 @@ export const Route = createRootRoute({
     <>
       <Header />
       <hr className="dark:border-gray-800" />
-      <Outlet />
+
+      <main className="container">
+        <Outlet />
+      </main>
     </>
   ),
 });
