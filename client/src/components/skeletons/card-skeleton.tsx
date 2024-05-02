@@ -9,7 +9,7 @@ import { Skeleton } from '../ui/skeleton';
 
 export function CardSkeleton() {
   return (
-    <Card className="w-[350px] mx-auto">
+    <Card className="w-[350px] mx-auto my-10">
       <CardHeader>
         <CardTitle>
           <Skeleton className="h-6 w-2/4" />
