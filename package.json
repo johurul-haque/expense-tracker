@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "tsx watch server/src/index.ts",
-    "build": "cd client && tsc && vite build"
+    "build": "cd client && pnpm install --frozen-lockfile && pnpm build"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.1",
