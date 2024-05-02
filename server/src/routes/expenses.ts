@@ -10,43 +10,41 @@ const fakeExpenses = [
   { id: 3, title: 'Rent', amount: 1000 },
 ];
 
-router.get('/', (c) => {
-  return c.json({ expenses: fakeExpenses });
-});
+export const expensesRoutes = router
+  .get('/', (c) => {
+    return c.json({ expenses: fakeExpenses });
+  })
+  .post('/', zValidator('json', createExpensesSchema), async (c) => {
+    const expenses = c.req.valid('json');
+    fakeExpenses.push({ ...expenses, id: fakeExpenses.length });
 
-router.post('/', zValidator('json', createExpensesSchema), async (c) => {
-  const expenses = c.req.valid('json');
-  fakeExpenses.push({ ...expenses, id: fakeExpenses.length });
+    return c.json({ expenses });
+  })
+  .get('/total-spent', (c) => {
+    const total = fakeExpenses.reduce(
+      (sum, expense) => sum + expense.amount,
+      0
+    );
+    return c.json({ total });
+  })
+  .get('/:id{[0-9]+}', (c) => {
+    const id = Number(c.req.param('id'));
+    const expenses = fakeExpenses.find((exp) => exp.id === id);
 
-  return c.json({ expenses });
-});
+    if (!expenses) {
+      return c.notFound();
+    }
 
-router.get('/total-spent', (c) => {
-  const total = fakeExpenses.reduce((sum, expense) => sum + expense.amount, 0);
-  return c.json({ total });
-});
+    return c.json({ expenses });
+  })
+  .delete('/:id{[0-9]+}', (c) => {
+    const id = Number(c.req.param('id'));
+    const index = fakeExpenses.findIndex((exp) => exp.id === id);
 
-router.get('/:id{[0-9]+}', (c) => {
-  const id = Number(c.req.param('id'));
-  const expenses = fakeExpenses.find((exp) => exp.id === id);
+    if (index === -1) {
+      return c.notFound();
+    }
 
-  if (!expenses) {
-    return c.notFound();
-  }
-
-  return c.json({ expenses });
-});
-
-router.delete('/:id{[0-9]+}', (c) => {
-  const id = Number(c.req.param('id'));
-  const index = fakeExpenses.findIndex((exp) => exp.id === id);
-
-  if (index === -1) {
-    return c.notFound();
-  }
-
-  const deletedExpense = fakeExpenses.splice(index, 1)[0];
-  return c.json({ expense: deletedExpense });
-});
-
-export const expensesRoutes = router;
+    const deletedExpense = fakeExpenses.splice(index, 1)[0];
+    return c.json({ expense: deletedExpense });
+  });
