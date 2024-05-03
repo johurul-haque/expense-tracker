@@ -16,7 +16,7 @@ export const expensesRoutes = router
   })
   .post('/', zValidator('json', createExpensesSchema), async (c) => {
     const expenses = c.req.valid('json');
-    fakeExpenses.push({ ...expenses, id: fakeExpenses.length });
+    fakeExpenses.push({ ...expenses, id: fakeExpenses.length + 1 });
 
     return c.json({ expenses });
   })

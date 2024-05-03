@@ -1,21 +1,27 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { api } from '@/lib/api';
 import { useForm } from '@tanstack/react-form';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/create-expenses')({
   component: () => <CreateExpense />,
 });
 
 function CreateExpense() {
+  const navigate = useNavigate();
+
   const form = useForm({
     defaultValues: {
       title: '',
       amount: 0,
     },
-    onSubmit: ({ value }) => {
-      console.log(value);
+    onSubmit: async ({ value }) => {
+      const res = await api.expenses.$post({ json: value });
+      if (!res.ok) throw new Error('Server Error');
+
+      navigate({ to: '/expenses' });
     },
   });
   return (
