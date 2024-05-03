@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 const LINKS = [
   ['/', 'Home'],
   ['/expenses', 'Expenses'],
-  ['/create-expenses', 'Create Expenses'],
+  ['/create-expenses', 'Create'],
 ];
 
 export function Header() {
