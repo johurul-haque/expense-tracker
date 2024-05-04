@@ -1,3 +1,4 @@
+import { buttonVariants } from '@/components/ui/button';
 import { userQueryOptions } from '@/lib/api';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 
@@ -15,7 +16,17 @@ export const Route = createFileRoute('/_authenticated')({
 
 function Component() {
   const { user } = Route.useRouteContext();
-  if (!user) return <a href="/api/login">Login</a>;
+  if (!user)
+    return (
+      <div className="py-6 text-center">
+        <a
+          href="/api/login"
+          className={`${buttonVariants()} block mx-auto max-w-fit`}
+        >
+          Login
+        </a>
+      </div>
+    );
 
   return <Outlet />;
 }

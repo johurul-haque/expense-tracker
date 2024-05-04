@@ -9,7 +9,7 @@ const LINKS = [
 
 export function Header() {
   return (
-    <header className="flex p-2 gap-2">
+    <header className="flex justify-center p-2 gap-4">
       {LINKS.map(([path, label]) => (
         <Link
           key={path}
