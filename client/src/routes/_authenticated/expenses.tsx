@@ -28,7 +28,7 @@ function Expenses() {
   if (error) return 'An error has occurred: ' + error.message;
 
   return (
-    <Table className="max-w-3xl mx-auto">
+    <Table className="max-w-3xl mx-auto my-6">
       <TableCaption>A list of all your expenses.</TableCaption>
       <TableHeader>
         <TableRow>
