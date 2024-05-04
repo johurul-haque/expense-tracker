@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { getAllExpenses } from '@/lib/api/get-all-expenses';
+import { getAllExpensesQueryOptions } from '@/lib/api/get-all-expenses';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -17,10 +17,7 @@ export const Route = createFileRoute('/_authenticated/expenses')({
 });
 
 function Expenses() {
-  const { isPending, data, error } = useQuery({
-    queryKey: ['get-all-expenses'],
-    queryFn: getAllExpenses,
-  });
+  const { isPending, data, error } = useQuery(getAllExpensesQueryOptions);
 
   if (error) return 'An error has occurred: ' + error.message;
 

@@ -33,7 +33,8 @@ export function createExpense(
       ...payload,
       userId,
     })
-    .returning();
+    .returning()
+    .then((res) => res[0]);
 }
 
 export function getTotalSpent(userId: string) {

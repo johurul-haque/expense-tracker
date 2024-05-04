@@ -2,8 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { api } from '@/lib/api';
+import { getAllExpensesQueryOptions } from '@/lib/api/get-all-expenses';
 import { insertExpenseSchema } from '@server/src/modules/expenses/expenses.validation';
 import { useForm } from '@tanstack/react-form';
+import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 
@@ -13,6 +15,7 @@ export const Route = createFileRoute('/_authenticated/create-expenses')({
 
 function CreateExpense() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const form = useForm({
     validatorAdapter: zodValidator,
@@ -21,12 +24,25 @@ function CreateExpense() {
       amount: '',
     },
     onSubmit: async ({ value }) => {
+      // This should be declared before sending post request, otherwise this might fetch data with the newly added expense
+      const existingExpenses = await queryClient.ensureQueryData(
+        getAllExpensesQueryOptions
+      );
+
       const res = await api.expenses.$post({ json: value });
       if (!res.ok) throw new Error('Server Error');
 
       navigate({ to: '/expenses' });
+
+      const newExpense = await res.json();
+
+      queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
+        ...existingExpenses,
+        expenses: [newExpense, ...existingExpenses.expenses],
+      });
     },
   });
+
   return (
     <>
       <h2 className="text-center mt-6 mb-2">Create Expense</h2>
