@@ -23,14 +23,18 @@ function Index() {
   if (error) return 'An error has occurred: ' + error.message;
 
   return (
-    <Card className="w-[350px] mx-auto my-10 text-center">
+    <Card className="w-[350px] mx-auto text-center">
       <CardHeader>
         <CardTitle>Total Spent</CardTitle>
         <CardDescription>The total amount you've spent</CardDescription>
       </CardHeader>
 
       <CardContent className="text-2xl font-medium">
-        {isPending ? <Skeleton className="h-7 w-10" /> : data.total || 0}
+        {isPending ? (
+          <Skeleton className="h-8 w-10 mx-auto" />
+        ) : (
+          data.total || 0
+        )}
       </CardContent>
     </Card>
   );

@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       <Header />
       <hr className="dark:border-gray-800" />
 
-      <main className="container">
+      <main className="container py-6">
         <Outlet />
       </main>
 

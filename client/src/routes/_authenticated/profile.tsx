@@ -16,7 +16,7 @@ function Profile() {
   const fullName = data.user.given_name + ' ' + data.user.family_name;
 
   return (
-    <div className="py-6 flex flex-col items-center">
+    <div className="text-center">
       <figure className="flex flex-col justify-center items-center gap-3 mb-1.5">
         {data.user.picture && (
           <img

@@ -18,7 +18,7 @@ function Component() {
   const { user } = Route.useRouteContext();
   if (!user)
     return (
-      <div className="py-6 text-center">
+      <div className="text-center">
         <a
           href="/api/login"
           className={`${buttonVariants()} block mx-auto max-w-fit`}

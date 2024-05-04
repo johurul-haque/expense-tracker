@@ -60,9 +60,7 @@ function CreateExpense() {
 
   return (
     <>
-      <h2 className="text-center mt-6 mb-2 text-lg font-medium">
-        Create Expense
-      </h2>
+      <h2 className="text-center mb-2 text-lg font-medium">Create Expense</h2>
 
       <form
         onSubmit={(e) => {
