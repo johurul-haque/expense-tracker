@@ -22,8 +22,7 @@ export const kindeClient = createKindeServerClient(
 
 export const sessionManager = (c: Context): SessionManager => ({
   async getSessionItem(key: string) {
-    const result = getCookie(c, key);
-    return result;
+    return getCookie(c, key);
   },
   async setSessionItem(key: string, value: unknown) {
     const cookieOptions = {

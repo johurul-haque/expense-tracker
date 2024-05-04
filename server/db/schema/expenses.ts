@@ -7,6 +7,7 @@ export const expensesTable = d.pgTable(
     title: d.text('title').notNull(),
     amount: d.numeric('amount', { precision: 12, scale: 2 }).notNull(),
     userId: d.text('user_id').notNull(),
+    createdAt: d.timestamp('created_at').defaultNow(),
   },
   (expenses) => {
     return {
