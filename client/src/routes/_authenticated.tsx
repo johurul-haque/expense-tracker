@@ -21,7 +21,7 @@ function Component() {
       <div className="text-center">
         <a
           href="/api/login"
-          className={`${buttonVariants()} block mx-auto max-w-fit`}
+          className={`${buttonVariants({ size: 'sm' })} block mx-auto max-w-fit`}
         >
           Login
         </a>
