@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { api } from '@/lib/api';
+import { loadingCreateExpenseQueryOptions } from '@/lib/api';
+import { createNewExpense } from '@/lib/api/create-expense';
 import { getAllExpensesQueryOptions } from '@/lib/api/get-all-expenses';
 import { insertExpenseSchema } from '@server/src/modules/expenses/expenses.validation';
 import { useForm } from '@tanstack/react-form';
@@ -29,17 +30,25 @@ function CreateExpense() {
         getAllExpensesQueryOptions
       );
 
-      const res = await api.expenses.$post({ json: value });
-      if (!res.ok) throw new Error('Server Error');
-
       navigate({ to: '/expenses' });
 
-      const newExpense = await res.json();
+      const loadingNewExpenseQueryKey =
+        loadingCreateExpenseQueryOptions.queryKey;
 
-      queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
-        ...existingExpenses,
-        expenses: [newExpense, ...existingExpenses.expenses],
-      });
+      queryClient.setQueryData(loadingNewExpenseQueryKey, { expense: value });
+
+      try {
+        const newExpense = await createNewExpense(value);
+
+        queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
+          ...existingExpenses,
+          expenses: [newExpense, ...existingExpenses.expenses],
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        queryClient.setQueryData(loadingNewExpenseQueryKey, {});
+      }
     },
   });
 

@@ -1,4 +1,5 @@
 import { TableRowSkeleton } from '@/components/skeletons/table-row-skeletons';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { loadingCreateExpenseQueryOptions } from '@/lib/api';
 import { getAllExpensesQueryOptions } from '@/lib/api/get-all-expenses';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
@@ -18,8 +20,13 @@ export const Route = createFileRoute('/_authenticated/expenses')({
 
 function Expenses() {
   const { isPending, data, error } = useQuery(getAllExpensesQueryOptions);
+  const { data: loadingCreateExpense } = useQuery(
+    loadingCreateExpenseQueryOptions
+  );
 
   if (error) return 'An error has occurred: ' + error.message;
+
+  console.log(loadingCreateExpense);
 
   return (
     <Table className="max-w-3xl mx-auto">
@@ -33,6 +40,23 @@ function Expenses() {
         </TableRow>
       </TableHeader>
       <TableBody>
+        {loadingCreateExpense?.expense && (
+          <TableRow>
+            <TableCell className="font-medium">
+              <Skeleton className="h-6 w-full" />
+            </TableCell>
+
+            <TableCell>{loadingCreateExpense.expense.title}</TableCell>
+
+            <TableCell className="text-right">
+              {loadingCreateExpense.expense.amount}
+            </TableCell>
+
+            <TableCell>
+              <Skeleton className="h-6 w-full" />
+            </TableCell>
+          </TableRow>
+        )}
         {isPending ? (
           <TableRowSkeleton />
         ) : (
