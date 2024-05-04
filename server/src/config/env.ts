@@ -4,6 +4,7 @@ import { z } from 'zod';
 export const env = z
   .object({
     PORT: z.coerce.number().default(3000),
+    DATABASE_URL: z.string().url(),
     KINDE_DOMAIN: z.string().url(),
     KINDE_CLIENT_ID: z.string(),
     KINDE_CLIENT_SECRET: z.string(),
