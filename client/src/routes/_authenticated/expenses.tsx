@@ -32,6 +32,7 @@ function Expenses() {
           <TableHead>Id</TableHead>
           <TableHead>Title</TableHead>
           <TableHead className="text-right">Amount</TableHead>
+          <TableHead>Date</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -43,6 +44,7 @@ function Expenses() {
               <TableCell className="font-medium">{expense.id}</TableCell>
               <TableCell>{expense.title}</TableCell>
               <TableCell className="text-right">{expense.amount}</TableCell>
+              <TableCell>{expense.createdAt?.split('T')[0]}</TableCell>
             </TableRow>
           ))
         )}
