@@ -4,6 +4,7 @@ const LINKS = [
   ['/', 'Home'],
   ['/expenses', 'Expenses'],
   ['/create-expenses', 'Create'],
+  ['/profile', 'Profile'],
 ];
 
 export function Header() {

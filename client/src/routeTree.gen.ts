@@ -11,19 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ExpensesImport } from './routes/expenses'
-import { Route as CreateExpensesImport } from './routes/create-expenses'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedExpensesImport } from './routes/_authenticated/expenses'
+import { Route as AuthenticatedCreateExpensesImport } from './routes/_authenticated/create-expenses'
 
 // Create/Update Routes
 
-const ExpensesRoute = ExpensesImport.update({
-  path: '/expenses',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const CreateExpensesRoute = CreateExpensesImport.update({
-  path: '/create-expenses',
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -31,6 +28,22 @@ const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const AuthenticatedProfileRoute = AuthenticatedProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedExpensesRoute = AuthenticatedExpensesImport.update({
+  path: '/expenses',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedCreateExpensesRoute =
+  AuthenticatedCreateExpensesImport.update({
+    path: '/create-expenses',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -40,13 +53,21 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/create-expenses': {
-      preLoaderRoute: typeof CreateExpensesImport
+    '/_authenticated': {
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
-    '/expenses': {
-      preLoaderRoute: typeof ExpensesImport
-      parentRoute: typeof rootRoute
+    '/_authenticated/create-expenses': {
+      preLoaderRoute: typeof AuthenticatedCreateExpensesImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/expenses': {
+      preLoaderRoute: typeof AuthenticatedExpensesImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/profile': {
+      preLoaderRoute: typeof AuthenticatedProfileImport
+      parentRoute: typeof AuthenticatedImport
     }
   }
 }
@@ -55,8 +76,11 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
-  CreateExpensesRoute,
-  ExpensesRoute,
+  AuthenticatedRoute.addChildren([
+    AuthenticatedCreateExpensesRoute,
+    AuthenticatedExpensesRoute,
+    AuthenticatedProfileRoute,
+  ]),
 ])
 
 /* prettier-ignore-end */
