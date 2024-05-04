@@ -14,3 +14,5 @@ export const insertExpenseSchema = createInsertSchema(expensesTable, {
   title: true,
   amount: true,
 });
+
+export type insertExpenseSchema = z.infer<typeof insertExpenseSchema>;
