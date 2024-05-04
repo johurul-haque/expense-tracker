@@ -1,5 +1,6 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
+import { authMiddleware } from '../kinde';
 import { createExpensesSchema } from '../validations/expenses';
 
 const router = new Hono();
@@ -11,6 +12,7 @@ const fakeExpenses = [
 ];
 
 export const expensesRoutes = router
+  .use(authMiddleware)
   .get('/', (c) => {
     return c.json({ expenses: fakeExpenses });
   })
