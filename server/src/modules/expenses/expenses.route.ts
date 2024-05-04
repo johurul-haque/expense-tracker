@@ -8,7 +8,7 @@ import {
   getSingleExpense,
   getTotalSpent,
 } from './expenses.service';
-import { createExpenseSchema } from './expenses.validation';
+import { insertExpenseSchema } from './expenses.validation';
 
 const app = new Hono();
 
@@ -20,7 +20,7 @@ export const expensesRoutes = app
 
     return c.json({ expenses });
   })
-  .post('/', zValidator('json', createExpenseSchema), async (c) => {
+  .post('/', zValidator('json', insertExpenseSchema), async (c) => {
     const expenses = c.req.valid('json'),
       user = c.var.user;
 

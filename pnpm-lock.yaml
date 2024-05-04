@@ -20,6 +20,9 @@ dependencies:
   drizzle-orm:
     specifier: ^0.30.10
     version: 0.30.10(pg@8.11.5)(postgres@3.4.4)
+  drizzle-zod:
+    specifier: ^0.5.1
+    version: 0.5.1(drizzle-orm@0.30.10)(zod@3.23.5)
   hono:
     specifier: ^4.2.9
     version: 4.2.9
@@ -890,6 +893,16 @@ packages:
     dependencies:
       pg: 8.11.5
       postgres: 3.4.4
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.30.10)(zod@3.23.5):
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+    dependencies:
+      drizzle-orm: 0.30.10(pg@8.11.5)(postgres@3.4.4)
+      zod: 3.23.5
     dev: false
 
   /env-paths@3.0.0:

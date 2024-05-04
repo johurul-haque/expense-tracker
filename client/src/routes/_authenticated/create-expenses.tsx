@@ -2,8 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { api } from '@/lib/api';
+import { insertExpenseSchema } from '@server/src/modules/expenses/expenses.validation';
 import { useForm } from '@tanstack/react-form';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { zodValidator } from '@tanstack/zod-form-adapter';
 
 export const Route = createFileRoute('/_authenticated/create-expenses')({
   component: () => <CreateExpense />,
@@ -13,6 +15,7 @@ function CreateExpense() {
   const navigate = useNavigate();
 
   const form = useForm({
+    validatorAdapter: zodValidator,
     defaultValues: {
       title: '',
       amount: '',
@@ -38,6 +41,9 @@ function CreateExpense() {
       >
         <form.Field
           name="title"
+          validators={{
+            onSubmit: insertExpenseSchema.shape.title,
+          }}
           children={(field) => (
             <>
               <Label htmlFor={field.name}>Title</Label>
@@ -53,7 +59,7 @@ function CreateExpense() {
               />
 
               {field.state.meta.touchedErrors && (
-                <em>{field.state.meta.touchedErrors}</em>
+                <em className="block">{field.state.meta.touchedErrors}</em>
               )}
             </>
           )}
@@ -61,6 +67,9 @@ function CreateExpense() {
 
         <form.Field
           name="amount"
+          validators={{
+            onSubmit: insertExpenseSchema.shape.amount,
+          }}
           children={(field) => (
             <>
               <Label htmlFor={field.name}>Amount</Label>
@@ -76,7 +85,7 @@ function CreateExpense() {
               />
 
               {field.state.meta.touchedErrors && (
-                <em>{field.state.meta.touchedErrors}</em>
+                <em className="block">{field.state.meta.touchedErrors}</em>
               )}
             </>
           )}

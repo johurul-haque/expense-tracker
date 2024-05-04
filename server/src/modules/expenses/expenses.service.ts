@@ -2,7 +2,7 @@ import { and, desc, eq, sum } from 'drizzle-orm';
 import { z } from 'zod';
 import { db } from '../../../db';
 import { expensesTable } from '../../../db/schema/expenses.schema';
-import { createExpenseSchema } from './expenses.validation';
+import { insertExpenseSchema } from './expenses.validation';
 
 export function getExpenses(userId: string) {
   return db
@@ -24,7 +24,7 @@ export async function getSingleExpense(userId: string, expenseId: number) {
 }
 
 export function createExpense(
-  payload: z.infer<typeof createExpenseSchema>,
+  payload: z.infer<typeof insertExpenseSchema>,
   userId: string
 ) {
   return db
