@@ -1,6 +1,4 @@
 import * as d from 'drizzle-orm/pg-core';
-import { createInsertSchema } from 'drizzle-zod';
-import { z } from 'zod';
 
 export const expensesTable = d.pgTable(
   'expenses',
