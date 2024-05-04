@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { kindeClient, sessionManager } from '../kinde';
+import { getUser, kindeClient, sessionManager } from '../kinde';
 
 export const authRoutes = new Hono()
   .get('/login', async (c) => {
@@ -19,11 +19,6 @@ export const authRoutes = new Hono()
     const logoutUrl = await kindeClient.logout(sessionManager(c));
     return c.redirect(logoutUrl.toString());
   })
-  .get('/profile', async (c) => {
-    const manager = sessionManager(c);
-    const isAuthenticated = await kindeClient.isAuthenticated(manager);
-    if (!isAuthenticated) return c.json({ error: 'Unauthorized' }, 401);
-
-    const user = await kindeClient.getUser(manager);
-    return c.json({ user });
+  .get('/profile', getUser, async (c) => {
+    return c.json({ user: c.var.user });
   });
