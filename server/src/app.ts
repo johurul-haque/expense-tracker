@@ -1,8 +1,8 @@
 import { serveStatic } from '@hono/node-server/serve-static';
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
-import { authRoutes } from './routes/auth';
-import { expensesRoutes } from './routes/expenses';
+import { authRoutes } from './modules/auth/auth.route';
+import { expensesRoutes } from './modules/expenses/expenses.route';
 
 export const app = new Hono();
 

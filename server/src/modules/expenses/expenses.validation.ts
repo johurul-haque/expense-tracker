@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createExpensesSchema = z.object({
+export const createExpenseSchema = z.object({
   title: z.string(),
   amount: z.string(),
 });
