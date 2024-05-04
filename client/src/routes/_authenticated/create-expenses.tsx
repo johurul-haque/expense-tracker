@@ -37,7 +37,7 @@ function CreateExpense() {
           e.stopPropagation();
           void form.handleSubmit();
         }}
-        className="max-w-xl mx-auto"
+        className="max-w-xl flex flex-col gap-y-3 mx-auto"
       >
         <form.Field
           name="title"
@@ -45,7 +45,7 @@ function CreateExpense() {
             onSubmit: insertExpenseSchema.shape.title,
           }}
           children={(field) => (
-            <>
+            <div>
               <Label htmlFor={field.name}>Title</Label>
               <Input
                 className="mb-1"
@@ -59,16 +59,16 @@ function CreateExpense() {
               />
 
               {field.state.meta.touchedErrors && (
-                <em className="block">{field.state.meta.touchedErrors}</em>
+                <em>{field.state.meta.touchedErrors}</em>
               )}
-            </>
+            </div>
           )}
         />
 
         <form.Field
           name="amount"
           validators={{
-            onSubmit: insertExpenseSchema.shape.amount,
+            onChange: insertExpenseSchema.shape.amount,
           }}
           children={(field) => (
             <>
@@ -85,7 +85,7 @@ function CreateExpense() {
               />
 
               {field.state.meta.touchedErrors && (
-                <em className="block">{field.state.meta.touchedErrors}</em>
+                <em>{field.state.meta.touchedErrors}</em>
               )}
             </>
           )}
@@ -94,7 +94,7 @@ function CreateExpense() {
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-            <Button type="submit" className="mt-4" disabled={!canSubmit}>
+            <Button type="submit" disabled={!canSubmit}>
               {isSubmitting ? '...' : 'Create Expense'}
             </Button>
           )}
