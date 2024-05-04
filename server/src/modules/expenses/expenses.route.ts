@@ -52,7 +52,7 @@ export const expensesRoutes = app
 
     const expense = await deleteSingleExpense(user.id, id);
 
-    if (expense) {
+    if (!expense) {
       return c.notFound();
     }
 

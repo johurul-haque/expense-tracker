@@ -1,3 +1,4 @@
+import { ExpenseDeleteButton } from '@/components/expense-delete-button';
 import { TableRowSkeleton } from '@/components/skeletons/table-row-skeletons';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -35,6 +36,7 @@ function Expenses() {
           <TableHead>Title</TableHead>
           <TableHead className="text-right">Amount</TableHead>
           <TableHead>Date</TableHead>
+          <TableHead>Delete</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -64,6 +66,9 @@ function Expenses() {
               <TableCell>{expense.title}</TableCell>
               <TableCell className="text-right">{expense.amount}</TableCell>
               <TableCell>{expense.createdAt?.split('T')[0]}</TableCell>
+              <TableCell>
+                <ExpenseDeleteButton id={expense.id} />
+              </TableCell>
             </TableRow>
           ))
         )}
