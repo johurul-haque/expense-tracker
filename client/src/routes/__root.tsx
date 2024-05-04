@@ -1,4 +1,5 @@
 import { Header } from '@/components/header';
+import { Toaster } from '@/components/ui/sonner';
 import { QueryClient } from '@tanstack/react-query';
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 
@@ -15,6 +16,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       <main className="container">
         <Outlet />
       </main>
+
+      <Toaster />
     </>
   ),
 });

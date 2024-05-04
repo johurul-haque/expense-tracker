@@ -26,8 +26,6 @@ function Expenses() {
 
   if (error) return 'An error has occurred: ' + error.message;
 
-  console.log(loadingCreateExpense);
-
   return (
     <Table className="max-w-3xl mx-auto">
       <TableCaption>A list of all your expenses.</TableCaption>

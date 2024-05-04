@@ -2,13 +2,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { loadingCreateExpenseQueryOptions } from '@/lib/api';
-import { createNewExpense } from '@/lib/api/create-expense';
+import { createNewExpense } from '@/lib/api/create-new-expense';
 import { getAllExpensesQueryOptions } from '@/lib/api/get-all-expenses';
 import { insertExpenseSchema } from '@server/src/modules/expenses/expenses.validation';
 import { useForm } from '@tanstack/react-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-form-adapter';
+import { toast } from 'sonner';
 
 export const Route = createFileRoute('/_authenticated/create-expenses')({
   component: () => <CreateExpense />,
@@ -32,10 +33,9 @@ function CreateExpense() {
 
       navigate({ to: '/expenses' });
 
-      const loadingNewExpenseQueryKey =
-        loadingCreateExpenseQueryOptions.queryKey;
+      const queryKey = loadingCreateExpenseQueryOptions.queryKey;
 
-      queryClient.setQueryData(loadingNewExpenseQueryKey, { expense: value });
+      queryClient.setQueryData(queryKey, { expense: value });
 
       try {
         const newExpense = await createNewExpense(value);
@@ -44,10 +44,16 @@ function CreateExpense() {
           ...existingExpenses,
           expenses: [newExpense, ...existingExpenses.expenses],
         });
+
+        toast('Expense created', {
+          description: `Successfully created new expense: ${newExpense.id}`,
+        });
       } catch (error) {
-        console.log(error);
+        toast('Error', {
+          description: 'Failed to create new Expense',
+        });
       } finally {
-        queryClient.setQueryData(loadingNewExpenseQueryKey, {});
+        queryClient.setQueryData(queryKey, {});
       }
     },
   });
