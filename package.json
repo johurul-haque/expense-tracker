@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "i:dep": "pnpm i && cd client && pnpm i",
     "dev": "tsx watch server/src/index.ts",
     "build": "cd client && pnpm install --frozen-lockfile && pnpm build",
     "db:generate": "drizzle-kit generate:pg",
