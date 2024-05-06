@@ -10,7 +10,7 @@ const LINKS = [
 
 export function Header() {
   return (
-    <header className="flex justify-center px-2 py-3 gap-4 relative">
+    <header className="flex justify-center px-2 py-3 gap-4 sm:relative">
       {LINKS.map(([path, label]) => (
         <Link
           key={path}
@@ -25,7 +25,7 @@ export function Header() {
         href="https://github.com/johurul-haque/expense-tracker/"
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute right-4"
+        className="sm:absolute sm:right-4"
         title="View source code on GitHub"
       >
         <span className="sr-only">View source code on GitHub</span>
