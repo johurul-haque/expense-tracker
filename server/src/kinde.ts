@@ -65,7 +65,6 @@ export const authMiddleware = createMiddleware<Env>(async (c, next) => {
     c.set('user', user);
     await next();
   } catch (error) {
-    console.error(error);
     return c.json({ error: 'Unauthorized' }, 401);
   }
 });
